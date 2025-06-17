@@ -1,12 +1,12 @@
 # build
-FROM golang:1.18 as builder
+FROM golang:1.20 as builder
 
 WORKDIR /go/src
 COPY . /go/src/
 RUN CGO_ENABLED=0 go build -a -o freeswitch_exporter
 
 # run
-FROM scratch
+FROM debian
 
 COPY --from=builder /go/src/freeswitch_exporter /freeswitch_exporter
 
